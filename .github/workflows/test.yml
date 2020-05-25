@@ -9,6 +9,4 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
       - name: Run the tests
-        uses: ./.github/actions/dockerBuild/
-        with:
-          entrypoint: bin/tests
+        uses: ./.github/actions/dockerBuild

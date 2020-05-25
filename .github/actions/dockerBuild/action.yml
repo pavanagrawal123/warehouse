@@ -2,4 +2,4 @@ name: 'Build'
 description: 'Build our Docker image'
 runs:
   using: 'docker'
-  image: './Dockerfile'
+  image: '../../../Dockerfile'

@@ -1,0 +1,14 @@
+name: Docker Test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Run the tests
+        uses: ./.github/actions/build
+        with:
+          entrypoint: bin/tests

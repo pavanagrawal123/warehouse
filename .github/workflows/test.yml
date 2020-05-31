@@ -11,7 +11,7 @@ jobs:
       - run: echo ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
       - run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/ci || true
       - run: docker build . -t warehouse --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/ci
-      - run: docker tag warehouse${{ github.run_id }} docker.pkg.github.com/$GITHUB_REPOSITORY/ci && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/ci || true
+      - run: docker tag warehouse docker.pkg.github.com/$GITHUB_REPOSITORY/ci && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/ci || true
   test:
     needs: build_with_gpr
     runs-on: ubuntu-latest

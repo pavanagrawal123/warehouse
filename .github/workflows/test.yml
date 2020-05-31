@@ -3,17 +3,31 @@ name: Docker Test
 on: [push, pull_request]
 
 jobs:
+  build_with_gpr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
+      - run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/CI || true
+      - run: docker build . -t warehouse${{ github.run_id) }} --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/CI
+      - run: docker tag warehouse${{ github.run_id) docker.pkg.github.com/$GITHUB_REPOSITORY/CI && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/CI || true
   test:
+    needs: build_with_gpr
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
-      - name: Run the tests
+      - name: Pull the inmage 
         uses: ./.github/actions/dockerBuild
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/CI || true
+        run: docker run warehouse${{ github.run_id)
   lint:
+    needs: build_with_gpr
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
-      - name: Run the lint
+      - name: Pull the inmage 
         uses: ./.github/actions/dockerBuild
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/CI || true
+        run: docker run warehouse${{ github.run_id)

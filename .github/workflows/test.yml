@@ -9,8 +9,8 @@ jobs:
       - uses: actions/checkout@v2
       - run: echo ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
       - run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/CI || true
-      - run: docker build . -t warehouse${{ github.run_id) }} --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/CI
-      - run: docker tag warehouse${{ github.run_id) docker.pkg.github.com/$GITHUB_REPOSITORY/CI && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/CI || true
+      - run: docker build . -t warehouse${{ github.run_id }} --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/CI
+      - run: docker tag warehouse${{ github.run_id docker.pkg.github.com/$GITHUB_REPOSITORY/CI && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/CI || true
   test:
     needs: build_with_gpr
     runs-on: ubuntu-latest
@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Pull the inmage 
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/CI || true
-        run: docker run warehouse${{ github.run_id)
+        run: docker run warehouse${{ github.run_id
   lint:
     needs: build_with_gpr
     runs-on: ubuntu-latest
@@ -28,4 +28,4 @@ jobs:
         uses: actions/checkout@v2
       - name: Pull the inmage 
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/CI || true
-        run: docker run warehouse${{ github.run_id)
+        run: docker run warehouse${{ github.run_id
